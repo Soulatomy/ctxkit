@@ -9,3 +9,4 @@ browser-dist/*
 .DS_Store
 .env
 reports/
+release-artifacts/
