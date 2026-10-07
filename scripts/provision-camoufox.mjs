@@ -39,3 +39,12 @@ function sizeBytes(dir) {
 }
 
 console.log(`copied camoufox: ${src} -> ${dest} (${(sizeBytes(dest) / 1048576).toFixed(0)} MB)`);
+
+const bytes = sizeBytes(dest);
+if (bytes < 50 * 1048576) {
+  console.error(
+    `camoufox copy looks empty (${(bytes / 1048576).toFixed(1)} MB). ` +
+      "The fetch likely failed (e.g. GitHub API rate limit). Set GITHUB_TOKEN so camoufox fetch can authenticate.",
+  );
+  process.exit(1);
+}

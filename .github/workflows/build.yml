@@ -27,6 +27,8 @@ jobs:
     env:
       # Bundle the fingerprint Chromium into the app (goes to resources/browsers).
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/browser-dist
+      # Lets `camoufox fetch` authenticate GitHub API calls (avoids rate limits).
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Use the certificate from *_CSC_LINK rather than searching the keychain.
       # Signing is skipped automatically when the secrets are empty.
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
