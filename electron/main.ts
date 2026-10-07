@@ -37,9 +37,45 @@ async function startCore(): Promise<{ url: string; close(): Promise<void> }> {
   const bundledBrowsers = path.join(root, "browsers");
   if (fs.existsSync(bundledBrowsers)) process.env.PLAYWRIGHT_BROWSERS_PATH = bundledBrowsers;
 
+  // Camoufox is located via CAMOUFOX_EXECUTABLE_PATH; find the bundled binary.
+  for (const dir of [path.join(root, "browsers", "camoufox"), path.join(DEV_ROOT, "browser-dist", "camoufox")]) {
+    if (!fs.existsSync(dir)) continue;
+    const bin = findCamoufoxBinary(dir);
+    if (bin) {
+      process.env.CAMOUFOX_EXECUTABLE_PATH = bin;
+      console.log(`camoufox executable: ${bin}`);
+      break;
+    }
+  }
+
   // Dynamic import so config.ts reads the env vars we just set.
   const { startServer } = await import("../src/server/index.js");
   return startServer({ port: 0, host: "127.0.0.1" });
+}
+
+/** Locate the Camoufox browser binary inside a provisioned directory. */
+function findCamoufoxBinary(dir: string): string | undefined {
+  const names = process.platform === "win32" ? ["camoufox.exe"] : ["camoufox-bin", "camoufox"];
+  const found: string[] = [];
+  const stack = [dir];
+  while (stack.length) {
+    const d = stack.pop() as string;
+    let entries: fs.Dirent[];
+    try {
+      entries = fs.readdirSync(d, { withFileTypes: true });
+    } catch {
+      continue;
+    }
+    for (const e of entries) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) stack.push(p);
+      else if (names.includes(e.name)) found.push(p);
+    }
+  }
+  if (process.platform === "darwin") {
+    return found.find((p) => p.includes(`${path.sep}MacOS${path.sep}`)) ?? found[0];
+  }
+  return found[0];
 }
 
 function createWindow(url: string): void {

@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit",
     "make:icon": "node scripts/make-icon.mjs",
     "ensure:browser-dist": "node -e \"require('fs').mkdirSync('browser-dist',{recursive:true})\"",
+    "provision:camoufox": "node scripts/provision-camoufox.mjs",
     "electron:build": "esbuild electron/main.ts electron/preload.ts --bundle --platform=node --format=cjs --packages=external --outdir=electron/dist --out-extension:.js=.cjs",
     "electron:dev": "npm run electron:build && electron . --no-sandbox",
     "dist": "npm run make:icon && npm run ensure:browser-dist && npm run electron:build && electron-builder",

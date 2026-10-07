@@ -10,130 +10,134 @@
     <header>
       <div class="brand">
         <span class="logo">◍</span>
-        <h1>Fingerprint Browser</h1>
+        <h1 data-i18n="brand.title">Fingerprint Browser</h1>
       </div>
       <div class="header-right">
         <span id="engines-summary" class="muted"></span>
-        <button id="set-token" class="ghost" title="Set API token">Key</button>
-        <button id="refresh" class="ghost" title="Refresh">⟳</button>
+        <select id="lang" class="lang-select" aria-label="Language"></select>
+        <button id="set-token" class="ghost" data-i18n="common.key" data-i18n-title="common.key">Key</button>
+        <button id="refresh" class="ghost" data-i18n-title="common.refresh">⟳</button>
       </div>
     </header>
 
     <main>
       <section class="panel">
         <div class="panel-head">
-          <h2>Profiles</h2>
+          <h2 data-i18n="profiles.title">Profiles</h2>
           <div class="toolbar">
-            <input id="search" placeholder="Search name / tag…" autocomplete="off" />
-            <select id="folder-filter"><option value="">All folders</option></select>
-            <button id="batch-profile" class="ghost">Batch</button>
-            <button id="import-btn" class="ghost">Import</button>
-            <button id="export-btn" class="ghost">Export</button>
-            <button id="new-profile" class="primary">+ New profile</button>
+            <input id="search" data-i18n-ph="profiles.search" placeholder="Search name / tag…" autocomplete="off" />
+            <select id="folder-filter"><option value="" data-i18n="profiles.allFolders">All folders</option></select>
+            <button id="batch-profile" class="ghost" data-i18n="profiles.batch">Batch</button>
+            <button id="import-btn" class="ghost" data-i18n="common.import">Import</button>
+            <button id="export-btn" class="ghost" data-i18n="common.export">Export</button>
+            <button id="new-profile" class="primary" data-i18n="profiles.new">+ New profile</button>
           </div>
         </div>
         <div id="bulk-bar" class="bulk-bar hidden">
-          <span id="bulk-count" class="muted">0 selected</span>
-          <button data-bulk="launch" class="primary">Launch</button>
-          <button data-bulk="stop" class="ghost">Stop</button>
-          <button data-bulk="delete" class="ghost danger">Delete</button>
-          <button data-bulk="syncType" class="ghost">Sync type</button>
-          <button data-bulk="syncGoto" class="ghost">Sync goto</button>
-          <input id="bulk-folder" placeholder="move to folder…" size="14" />
-          <button data-bulk="move" class="ghost">Move</button>
+          <span id="bulk-count" class="muted"></span>
+          <button data-bulk="launch" class="primary" data-i18n="common.launch">Launch</button>
+          <button data-bulk="stop" class="ghost" data-i18n="common.stop">Stop</button>
+          <button data-bulk="delete" class="ghost danger" data-i18n="common.delete">Delete</button>
+          <button data-bulk="syncType" class="ghost" data-i18n="bulk.syncType">Sync type</button>
+          <button data-bulk="syncGoto" class="ghost" data-i18n="bulk.syncGoto">Sync goto</button>
+          <input id="bulk-folder" data-i18n-ph="bulk.folderPh" placeholder="move to folder…" size="14" />
+          <button data-bulk="move" class="ghost" data-i18n="bulk.move">Move</button>
         </div>
         <input type="file" id="import-file" accept="application/json,.json" class="hidden" />
         <div class="table-wrap"><table id="profiles-table">
           <thead>
             <tr>
               <th class="check-col"><input type="checkbox" id="select-all" /></th>
-              <th>Name</th><th>Folder</th><th>Tags</th><th>Engine</th><th>OS</th><th>Timezone</th><th>Proxy</th><th>Status</th><th class="actions-col">Actions</th>
+              <th data-i18n="th.name">Name</th><th data-i18n="th.folder">Folder</th><th data-i18n="th.tags">Tags</th>
+              <th data-i18n="th.engine">Engine</th><th data-i18n="th.os">OS</th><th data-i18n="th.timezone">Timezone</th>
+              <th data-i18n="th.proxy">Proxy</th><th data-i18n="th.status">Status</th>
+              <th class="actions-col" data-i18n="th.actions">Actions</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table></div>
-        <p id="profiles-empty" class="empty hidden">No profiles yet. Create one to get started.</p>
+        <p id="profiles-empty" class="empty hidden"></p>
       </section>
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Proxy library</h2>
+          <h2 data-i18n="proxy.title">Proxy library</h2>
           <div class="toolbar">
-            <button id="proxy-export" class="ghost">Export</button>
-            <button id="proxy-import-btn" class="ghost">Import</button>
+            <button id="proxy-export" class="ghost" data-i18n="common.export">Export</button>
+            <button id="proxy-import-btn" class="ghost" data-i18n="common.import">Import</button>
           </div>
         </div>
         <form id="proxy-form" class="inline-form">
-          <input name="server" placeholder="http://ip:port or socks5://host:1080" required />
-          <input name="name" placeholder="name (optional)" />
-          <input name="country" placeholder="country (US)" size="8" />
-          <button class="primary" type="submit">Add proxy</button>
+          <input name="server" data-i18n-ph="proxy.serverPh" placeholder="http://ip:port or socks5://host:1080" required />
+          <input name="name" data-i18n-ph="proxy.namePh" placeholder="name (optional)" />
+          <input name="country" data-i18n-ph="proxy.countryPh" placeholder="country (US)" size="8" />
+          <button class="primary" type="submit" data-i18n="proxy.add">Add proxy</button>
         </form>
         <input type="file" id="proxy-import-file" accept="application/json,.json" class="hidden" />
         <div class="table-wrap"><table id="proxies-table">
-          <thead><tr><th>Name</th><th>Server</th><th>Country</th><th class="actions-col">Actions</th></tr></thead>
+          <thead><tr><th data-i18n="th.pName">Name</th><th data-i18n="th.pServer">Server</th><th data-i18n="th.pCountry">Country</th><th class="actions-col" data-i18n="th.pActions">Actions</th></tr></thead>
           <tbody></tbody>
         </table></div>
-        <p id="proxies-empty" class="empty hidden">No proxies.</p>
+        <p id="proxies-empty" class="empty hidden"></p>
       </section>
 
       <section class="panel">
-        <div class="panel-head"><h2>Engines</h2></div>
+        <div class="panel-head"><h2 data-i18n="engines.title">Engines</h2></div>
         <div id="engines-list" class="engines"></div>
       </section>
 
       <section class="panel">
-        <div class="panel-head"><h2>Settings</h2></div>
+        <div class="panel-head"><h2 data-i18n="settings.title">Settings</h2></div>
         <form id="settings-form" class="inline-form">
-          <label class="field">Default engine <select name="defaultEngine"></select></label>
-          <label class="field">Default OS
+          <label class="field"><span data-i18n="settings.defaultEngine">Default engine</span> <select name="defaultEngine"></select></label>
+          <label class="field"><span data-i18n="settings.defaultOs">Default OS</span>
             <select name="defaultOs">
-              <option value="">(auto)</option>
+              <option value="" data-i18n="opt.auto">(auto)</option>
               <option value="windows">Windows</option>
               <option value="macos">macOS</option>
               <option value="linux">Linux</option>
-            <option value="android">Android</option>
-            <option value="ios">iOS</option>
+              <option value="android">Android</option>
+              <option value="ios">iOS</option>
             </select>
           </label>
-          <label class="field">Default proxy <select name="defaultProxyId"><option value="">(direct)</option></select></label>
-          <label class="field checkbox"><input type="checkbox" name="headlessByDefault" /> headless by default</label>
-          <button class="primary" type="submit">Save settings</button>
+          <label class="field"><span data-i18n="settings.defaultProxy">Default proxy</span> <select name="defaultProxyId"><option value="" data-i18n="opt.direct">(direct)</option></select></label>
+          <label class="field checkbox"><input type="checkbox" name="headlessByDefault" /> <span data-i18n="settings.headless">headless by default</span></label>
+          <button class="primary" type="submit" data-i18n="settings.save">Save settings</button>
         </form>
       </section>
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Team</h2>
+          <h2 data-i18n="team.title">Team</h2>
           <span class="muted" id="me-role"></span>
         </div>
         <form id="user-form" class="inline-form">
-          <input name="name" placeholder="name" required />
+          <input name="name" data-i18n-ph="team.namePh" placeholder="name" required />
           <select name="role">
-            <option value="operator">operator</option>
-            <option value="viewer">viewer</option>
-            <option value="admin">admin</option>
+            <option value="operator" data-i18n="role.operator">operator</option>
+            <option value="viewer" data-i18n="role.viewer">viewer</option>
+            <option value="admin" data-i18n="role.admin">admin</option>
           </select>
-          <input name="token" placeholder="token (optional)" />
-          <button class="primary" type="submit">Add user</button>
+          <input name="token" data-i18n-ph="team.tokenPh" placeholder="token (optional)" />
+          <button class="primary" type="submit" data-i18n="team.add">Add user</button>
         </form>
         <div class="table-wrap"><table id="users-table">
-          <thead><tr><th>Name</th><th>Role</th><th>Created</th><th class="actions-col">Actions</th></tr></thead>
+          <thead><tr><th data-i18n="th.tName">Name</th><th data-i18n="th.tRole">Role</th><th data-i18n="th.tCreated">Created</th><th class="actions-col" data-i18n="th.tActions">Actions</th></tr></thead>
           <tbody></tbody>
         </table></div>
-        <p id="users-empty" class="empty hidden">No users — API is open (no auth required).</p>
+        <p id="users-empty" class="empty hidden" data-i18n="team.empty"></p>
       </section>
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Activity</h2>
-          <button id="clear-activity" class="ghost">Clear</button>
+          <h2 data-i18n="activity.title">Activity</h2>
+          <button id="clear-activity" class="ghost" data-i18n="activity.clear">Clear</button>
         </div>
         <div id="activity-list" class="activity"></div>
       </section>
 
       <section class="panel">
-        <div class="panel-head"><h2>Audit tools</h2><span class="muted">external sites — open in your browser</span></div>
+        <div class="panel-head"><h2 data-i18n="tools.title">Audit tools</h2><span class="muted" data-i18n="tools.note">external sites — open in your browser</span></div>
         <div class="tools">
           <a href="https://bot.sannysoft.com/" target="_blank" rel="noreferrer">Sannysoft</a>
           <a href="https://abrahamjuliot.github.io/creepjs/" target="_blank" rel="noreferrer">CreepJS</a>
@@ -149,13 +153,13 @@
 
     <dialog id="editor">
       <form id="editor-form" method="dialog">
-        <h2 id="editor-title">New profile</h2>
+        <h2 id="editor-title" data-i18n="editor.new">New profile</h2>
         <input type="hidden" name="id" />
-        <label>Name <input name="name" required autocomplete="off" /></label>
-        <label>Engine <select name="engine"></select></label>
-        <label>OS
+        <label><span data-i18n="editor.name">Name</span> <input name="name" required autocomplete="off" /></label>
+        <label><span data-i18n="editor.engine">Engine</span> <select name="engine"></select></label>
+        <label><span data-i18n="editor.os">OS</span>
           <select name="os">
-            <option value="">(auto)</option>
+            <option value="" data-i18n="opt.auto">(auto)</option>
             <option value="windows">Windows</option>
             <option value="macos">macOS</option>
             <option value="linux">Linux</option>
@@ -163,32 +167,30 @@
             <option value="ios">iOS</option>
           </select>
         </label>
-        <label>Timezone <input name="timezone" placeholder="America/New_York" autocomplete="off" /></label>
-        <label>Locale <input name="locale" placeholder="en-US" autocomplete="off" /></label>
-        <label>Proxy
-          <select name="proxyId"><option value="">(direct)</option></select>
-        </label>
-        <label>Folder <input name="folder" placeholder="e.g. Amazon-US" autocomplete="off" /></label>
-        <label>Status <input name="status" placeholder="e.g. warmup / active / banned" autocomplete="off" /></label>
-        <label>Tags <input name="tags" placeholder="comma, separated" autocomplete="off" /></label>
-        <label>Extensions <textarea name="extensions" rows="2" placeholder="one unpacked extension dir per line"></textarea></label>
-        <label>Notes <textarea name="notes" rows="2" placeholder="optional"></textarea></label>
+        <label><span data-i18n="editor.timezone">Timezone</span> <input name="timezone" placeholder="America/New_York" autocomplete="off" /></label>
+        <label><span data-i18n="editor.locale">Locale</span> <input name="locale" placeholder="en-US" autocomplete="off" /></label>
+        <label><span data-i18n="editor.proxy">Proxy</span> <select name="proxyId"><option value="" data-i18n="opt.direct">(direct)</option></select></label>
+        <label><span data-i18n="editor.folder">Folder</span> <input name="folder" data-i18n-ph="editor.folderPh" placeholder="e.g. Amazon-US" autocomplete="off" /></label>
+        <label><span data-i18n="editor.status">Status</span> <input name="status" data-i18n-ph="editor.statusPh" placeholder="e.g. warmup / active / banned" autocomplete="off" /></label>
+        <label><span data-i18n="editor.tags">Tags</span> <input name="tags" data-i18n-ph="editor.tagsPh" placeholder="comma, separated" autocomplete="off" /></label>
+        <label><span data-i18n="editor.extensions">Extensions</span> <textarea name="extensions" rows="2" data-i18n-ph="editor.extensionsPh" placeholder="one unpacked extension dir per line"></textarea></label>
+        <label><span data-i18n="editor.notes">Notes</span> <textarea name="notes" rows="2" data-i18n-ph="editor.notesPh" placeholder="optional"></textarea></label>
         <div class="dialog-actions">
-          <button type="button" class="ghost" id="editor-cancel">Cancel</button>
-          <button type="submit" class="primary">Save</button>
+          <button type="button" class="ghost" id="editor-cancel" data-i18n="common.cancel">Cancel</button>
+          <button type="submit" class="primary" data-i18n="common.save">Save</button>
         </div>
       </form>
     </dialog>
 
     <dialog id="batch-dialog">
       <form id="batch-form" method="dialog">
-        <h2>Batch create profiles</h2>
-        <label>Count <input type="number" name="count" value="5" min="1" max="500" /></label>
-        <label>Name pattern <input name="namePattern" value="profile-{n}" autocomplete="off" /></label>
-        <label>Engine <select name="engine"></select></label>
-        <label>OS
+        <h2 data-i18n="batch.title">Batch create profiles</h2>
+        <label><span data-i18n="batch.count">Count</span> <input type="number" name="count" value="5" min="1" max="500" /></label>
+        <label><span data-i18n="batch.namePattern">Name pattern</span> <input name="namePattern" value="profile-{n}" autocomplete="off" /></label>
+        <label><span data-i18n="batch.engine">Engine</span> <select name="engine"></select></label>
+        <label><span data-i18n="batch.os">OS</span>
           <select name="os">
-            <option value="">(auto)</option>
+            <option value="" data-i18n="opt.auto">(auto)</option>
             <option value="windows">Windows</option>
             <option value="macos">macOS</option>
             <option value="linux">Linux</option>
@@ -196,44 +198,44 @@
             <option value="ios">iOS</option>
           </select>
         </label>
-        <label>Proxy <select name="proxyId"><option value="">(direct)</option></select></label>
-        <label>Folder <input name="folder" placeholder="e.g. Amazon-US" autocomplete="off" /></label>
-        <label>Tags <input name="tags" placeholder="comma, separated" autocomplete="off" /></label>
+        <label><span data-i18n="batch.proxy">Proxy</span> <select name="proxyId"><option value="" data-i18n="opt.direct">(direct)</option></select></label>
+        <label><span data-i18n="batch.folder">Folder</span> <input name="folder" data-i18n-ph="editor.folderPh" placeholder="e.g. Amazon-US" autocomplete="off" /></label>
+        <label><span data-i18n="batch.tags">Tags</span> <input name="tags" data-i18n-ph="editor.tagsPh" placeholder="comma, separated" autocomplete="off" /></label>
         <div class="dialog-actions">
-          <button type="button" class="ghost" id="batch-cancel">Cancel</button>
-          <button type="submit" class="primary">Create</button>
+          <button type="button" class="ghost" id="batch-cancel" data-i18n="common.cancel">Cancel</button>
+          <button type="submit" class="primary" data-i18n="common.create">Create</button>
         </div>
       </form>
     </dialog>
 
     <dialog id="cookies-dialog">
-      <h2 id="cookies-title">Profile data</h2>
+      <h2 id="cookies-title" data-i18n="data.title">Profile data</h2>
       <input type="hidden" id="cookies-id" />
-      <p class="muted" id="cookies-summary">Import or export cookies and bookmarks (JSON).</p>
+      <p class="muted" id="cookies-summary" data-i18n="data.summary">Import or export cookies and bookmarks (JSON).</p>
       <div class="dialog-actions">
-        <button type="button" class="ghost" id="cookies-cancel">Close</button>
-        <button type="button" class="ghost" id="bookmarks-import">Import bookmarks…</button>
-        <button type="button" class="ghost" id="bookmarks-export">Export bookmarks</button>
-        <button type="button" class="ghost" id="cookies-import">Import cookies…</button>
-        <button type="button" class="primary" id="cookies-export">Export cookies</button>
+        <button type="button" class="ghost" id="cookies-cancel" data-i18n="common.close">Close</button>
+        <button type="button" class="ghost" id="bookmarks-import" data-i18n="data.importBookmarks">Import bookmarks…</button>
+        <button type="button" class="ghost" id="bookmarks-export" data-i18n="data.exportBookmarks">Export bookmarks</button>
+        <button type="button" class="ghost" id="cookies-import" data-i18n="data.importCookies">Import cookies…</button>
+        <button type="button" class="primary" id="cookies-export" data-i18n="data.exportCookies">Export cookies</button>
       </div>
       <input type="file" id="cookies-file" accept="application/json,.json" class="hidden" />
       <input type="file" id="bookmarks-file" accept="application/json,.json" class="hidden" />
     </dialog>
 
     <dialog id="onboarding">
-      <h2>Welcome to Fingerprint Browser</h2>
+      <h2 data-i18n="ob.title">Welcome to Fingerprint Browser</h2>
       <div id="ob-step1" class="ob-step">
-        <p class="muted">Step 1 of 3 — browser engines. The console needs at least one engine available.</p>
+        <p class="muted" data-i18n="ob.step1">Step 1 of 3 — browser engines.</p>
         <div id="ob-engines" class="engines"></div>
-        <button id="ob-recheck" class="ghost">Re-check</button>
+        <button id="ob-recheck" class="ghost" data-i18n="ob.recheck">Re-check</button>
       </div>
       <div id="ob-step2" class="ob-step hidden">
-        <p class="muted">Step 2 of 3 — defaults for new profiles.</p>
-        <label class="field">Default engine <select id="ob-engine"></select></label>
-        <label class="field">Default OS
+        <p class="muted" data-i18n="ob.step2">Step 2 of 3 — defaults.</p>
+        <label class="field"><span data-i18n="ob.defaultEngine">Default engine</span> <select id="ob-engine"></select></label>
+        <label class="field"><span data-i18n="ob.defaultOs">Default OS</span>
           <select id="ob-os">
-            <option value="">(auto)</option>
+            <option value="" data-i18n="opt.auto">(auto)</option>
             <option value="windows">Windows</option>
             <option value="macos">macOS</option>
             <option value="linux">Linux</option>
@@ -243,12 +245,12 @@
         </label>
       </div>
       <div id="ob-step3" class="ob-step hidden">
-        <p class="muted">Step 3 of 3 — create your first profile.</p>
-        <label class="field">Profile name <input id="ob-name" value="profile-1" autocomplete="off" /></label>
+        <p class="muted" data-i18n="ob.step3">Step 3 of 3 — create your first profile.</p>
+        <label class="field"><span data-i18n="ob.profileName">Profile name</span> <input id="ob-name" value="profile-1" autocomplete="off" /></label>
       </div>
       <div class="dialog-actions">
-        <button type="button" class="ghost" id="ob-skip">Skip</button>
-        <button type="button" class="primary" id="ob-next">Next</button>
+        <button type="button" class="ghost" id="ob-skip" data-i18n="ob.skip">Skip</button>
+        <button type="button" class="primary" id="ob-next" data-i18n="ob.next">Next</button>
       </div>
     </dialog>
 

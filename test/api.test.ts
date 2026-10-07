@@ -191,6 +191,8 @@ try {
   check("web console index served", indexHtml.includes("Fingerprint Browser"));
   const appJs = await fetch(base + "/app.js");
   check("web console app.js served", appJs.status === 200 && (appJs.headers.get("content-type") ?? "").includes("javascript"));
+  const i18nJs = await fetch(base + "/i18n.js");
+  check("i18n module served (en+zh)", i18nJs.status === 200 && (await i18nJs.text()).includes("指纹浏览器"));
   const spaFallback = await fetch(base + "/some/spa/route");
   check("SPA fallback serves index", spaFallback.status === 200 && (await spaFallback.text()).includes("Fingerprint Browser"));
 

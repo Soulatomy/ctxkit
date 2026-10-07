@@ -121,3 +121,7 @@ textarea {
 .tools a:hover { border-color: var(--accent); }
 .ob-step { display: grid; gap: 12px; margin-bottom: 8px; }
 #onboarding { width: min(560px, 94vw); }
+.lang-select {
+  background: var(--panel2); border: 1px solid var(--line); color: var(--text);
+  border-radius: 8px; padding: 5px 8px;
+}

@@ -57,6 +57,12 @@ jobs:
       - name: Provision Chromium into the bundle
         run: npx patchright install chromium
 
+      - name: Provision Camoufox into the bundle
+        run: npx camoufox fetch
+
+      - name: Copy Camoufox into browser-dist
+        run: node scripts/provision-camoufox.mjs
+
       - name: Build icon + Electron bundle
         run: npm run make:icon && npm run electron:build
 
