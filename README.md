@@ -232,6 +232,24 @@ git tag v0.1.0 && git push origin v0.1.0
   CI 里默认 `CSC_IDENTITY_AUTO_DISCOVERY=false` 跳过签名（测试用），自测时可右键打开或
   `xattr -cr /Applications/FingerprintBrowser.app`
 
+### 代码签名 / 公证配置（用 GitHub Secrets）
+
+仓库 **Settings → Secrets and variables → Actions** 添加：
+
+| Secret | 用途 | 来源 |
+|---|---|---|
+| `WIN_CSC_LINK` | Windows `.pfx` 的 base64（或 URL） | CA 购买 Authenticode 证书 |
+| `WIN_CSC_KEY_PASSWORD` | `.pfx` 密码 | — |
+| `MAC_CSC_LINK` | Developer ID Application `.p12` 的 base64 | Apple Developer Program |
+| `MAC_CSC_KEY_PASSWORD` | `.p12` 密码 | — |
+| `APPLE_ID` | Apple ID 邮箱 | — |
+| `APPLE_APP_SPECIFIC_PASSWORD` | App 专用密码 | appleid.apple.com |
+| `APPLE_TEAM_ID` | 团队 ID（10 位） | developer.apple.com |
+
+- base64：macOS `base64 -i cert.p12 | pbcopy`；Windows `certutil -encode cert.pfx out.txt`（去掉首尾行）
+- `electron/notarize.cjs` 在缺少 `APPLE_*` 时**自动跳过公证**；签名同理——secret 为空就出未签名包，不会报错
+- macOS 已配 `hardenedRuntime` + `entitlements.mac.plist`（含 JIT、`disable-library-validation`，因为要 spawn 独立浏览器进程）
+
 > 目标客户是 x86 Windows 与 M 系列 Mac，本 CI 矩阵正好覆盖：Windows 出 x64，
 > macOS 在 arm64 runner 上原生出 arm64。
 
