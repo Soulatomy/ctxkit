@@ -5,6 +5,10 @@ import { log } from "../../core/logger.js";
 
 const SCOPE = "engine:camoufox";
 
+// Loaded dynamically via a variable specifier so a missing optional dependency
+// does not break `tsc` (Camoufox is optional and requires Node >=22.15).
+const CAMOUFOX_PKG = "@camoufox/camoufox";
+
 const OS_MAP: Record<OS, string> = {
   windows: "windows",
   macos: "macos",
@@ -36,7 +40,7 @@ export class CamoufoxHost implements InjectionHost {
 
   async isAvailable(): Promise<{ ok: boolean; reason?: string }> {
     try {
-      await import("@camoufox/camoufox");
+      await import(CAMOUFOX_PKG);
       return { ok: true };
     } catch (err) {
       return {
@@ -47,7 +51,7 @@ export class CamoufoxHost implements InjectionHost {
   }
 
   async launch(req: LaunchRequest): Promise<EngineSession> {
-    const mod = (await import("@camoufox/camoufox")) as unknown as {
+    const mod = (await import(CAMOUFOX_PKG)) as unknown as {
       Camoufox: (opts: Record<string, unknown>) => Promise<Browser>;
     };
 
