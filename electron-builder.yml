@@ -1,0 +1,29 @@
+appId: com.fingerprintbrowser.desktop
+productName: FingerprintBrowser
+directories:
+  output: release
+  buildResources: build
+icon: build/icon.png
+files:
+  - electron/dist/**/*
+  - package.json
+# The console UI is read from process.resourcesPath/ui at runtime (FB_ROOT).
+extraResources:
+  - from: ui
+    to: ui
+  # Provisioned fingerprint browsers. Keep browser-dist/ present (even empty);
+  # CI fills it via `PLAYWRIGHT_BROWSERS_PATH=browser-dist npx patchright install chromium`.
+  - from: browser-dist
+    to: browsers
+linux:
+  target:
+    - AppImage
+  category: Utility
+mac:
+  target:
+    - dmg
+  category: public.app-category.utilities
+win:
+  target:
+    - nsis
+    - portable

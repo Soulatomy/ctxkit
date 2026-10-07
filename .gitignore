@@ -1,0 +1,11 @@
+node_modules/
+data/
+dist/
+electron/dist/
+release/
+browser-dist/*
+!browser-dist/.gitkeep
+*.log
+.DS_Store
+.env
+reports/

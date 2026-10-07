@@ -1,0 +1,3 @@
+# Placeholder so the extraResources "browser-dist -> browsers" path always exists.
+# CI / release builds fill this directory with provisioned browsers, e.g.:
+#   PLAYWRIGHT_BROWSERS_PATH=$PWD/browser-dist npx patchright install chromium

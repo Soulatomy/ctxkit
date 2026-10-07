@@ -1,0 +1,64 @@
+name: desktop-build
+
+# Builds distributable desktop installers on native runners:
+#  - windows-latest : x86_64 Windows (NSIS + portable)
+#  - macos-14       : Apple Silicon (arm64) macOS (dmg + zip)
+#
+# Trigger: manual, or pushing a tag like v0.1.0.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: --win
+            artifact: windows-x64
+          - os: macos-14
+            target: --mac
+            artifact: macos-arm64
+    runs-on: ${{ matrix.os }}
+    env:
+      # Bundle the fingerprint Chromium into the app (goes to resources/browsers).
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/browser-dist
+      # Skip code signing on CI (no certs). Add certs/notarization for release.
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck & unit/API tests
+        run: npm run typecheck && npm test
+
+      - name: Provision Chromium into the bundle
+        run: npx patchright install chromium
+
+      - name: Build icon + Electron bundle
+        run: npm run make:icon && npm run electron:build
+
+      - name: Package
+        run: npx electron-builder ${{ matrix.target }} --publish never
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.zip
+            release/*.AppImage
+          if-no-files-found: warn
