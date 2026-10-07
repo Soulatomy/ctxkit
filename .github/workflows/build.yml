@@ -27,8 +27,19 @@ jobs:
     env:
       # Bundle the fingerprint Chromium into the app (goes to resources/browsers).
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/browser-dist
-      # Skip code signing on CI (no certs). Add certs/notarization for release.
+      # Use the certificate from *_CSC_LINK rather than searching the keychain.
+      # Signing is skipped automatically when the secrets are empty.
       CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      # Windows Authenticode (base64 of the .pfx, or a URL)
+      WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+      WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+      # macOS Developer ID Application certificate (base64 of the .p12)
+      MAC_CSC_LINK: ${{ secrets.MAC_CSC_LINK }}
+      MAC_CSC_KEY_PASSWORD: ${{ secrets.MAC_CSC_KEY_PASSWORD }}
+      # macOS notarization (app-specific password from appleid.apple.com)
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
     steps:
       - uses: actions/checkout@v4
 

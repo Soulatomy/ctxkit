@@ -15,6 +15,8 @@ extraResources:
   # CI fills it via `PLAYWRIGHT_BROWSERS_PATH=browser-dist npx patchright install chromium`.
   - from: browser-dist
     to: browsers
+# macOS notarization hook (root-level option). Self-skips without APPLE_* creds.
+afterSign: electron/notarize.cjs
 linux:
   target:
     - AppImage
@@ -22,8 +24,16 @@ linux:
 mac:
   target:
     - dmg
+    - zip
   category: public.app-category.utilities
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: electron/entitlements.mac.plist
+  entitlementsInherit: electron/entitlements.mac.plist
 win:
   target:
     - nsis
     - portable
+  signingHashAlgorithms:
+    - sha256
+  rfc3161TimeStampServer: http://timestamp.digicert.com
